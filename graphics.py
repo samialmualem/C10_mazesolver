@@ -4,11 +4,11 @@ class Cell:
     def __init__(self, 
                  x1, y1, 
                  x2, y2, 
-                 win, 
+                 win=None, 
                  has_left_wall=True, 
                  has_right_wall=True, 
                  has_top_wall=True, 
-                 has_bottom_wall=True,
+                 has_bottom_wall=True
                  ):
         self.has_left_wall = has_left_wall
         self.has_right_wall = has_right_wall
@@ -19,20 +19,37 @@ class Cell:
         self._y1 = y1
         self._y2 = y2
         self._win = win
+        self.visited = False
 
-    def draw(self, window, fill_color='black'):
+    def draw(self, window, fill_color='white', no_fill_color='black'):
+        
         if self.has_bottom_wall:
             bottom_line = Line(Point(self._x1, self._y2), Point(self._x2, self._y2))
             window.draw_line(bottom_line, fill_color)
+        else:
+            bottom_line = Line(Point(self._x1, self._y2), Point(self._x2, self._y2))
+            window.draw_line(bottom_line, no_fill_color)
+
         if self.has_top_wall:
             top_line = Line(Point(self._x1, self._y1), Point(self._x2, self._y1))
             window.draw_line(top_line, fill_color)
+        else:
+            top_line = Line(Point(self._x1, self._y1), Point(self._x2, self._y1))
+            window.draw_line(top_line, no_fill_color)
+
+
         if self.has_left_wall:  
             left_line = Line(Point(self._x1, self._y1), Point(self._x1, self._y2))
             window.draw_line(left_line, fill_color)
+        else:
+            left_line = Line(Point(self._x1, self._y1), Point(self._x1, self._y2))
+            window.draw_line(left_line, no_fill_color)
         if self.has_right_wall:
             right_line = Line(Point(self._x2, self._y1), Point(self._x2, self._y2))
             window.draw_line(right_line, fill_color)
+        else:
+            right_line = Line(Point(self._x2, self._y1), Point(self._x2, self._y2))
+            window.draw_line(right_line, no_fill_color)
     
     def draw_move(self, to_cell, undo=False):
         fill_color = 'gray' if undo else 'red'
